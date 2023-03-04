@@ -46,4 +46,5 @@
     <string name="adsbfi_label">adsb.fi</string>
     <string name="feeder_beast_label">Beast</string>
     <string name="feeder_mlat_label">MLAT</string>
+    <string name="platform_label">Platform</string>
 </resources>

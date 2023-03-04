@@ -1,4 +1,4 @@
-package eu.darken.adsbmt.main.ui.main
+package eu.darken.adsbmt.main.ui.dashboard
 
 import android.os.Bundle
 import android.view.View
@@ -10,45 +10,39 @@ import eu.darken.adsbmt.common.BuildConfigWrap
 import eu.darken.adsbmt.common.lists.differ.update
 import eu.darken.adsbmt.common.lists.setupDefaults
 import eu.darken.adsbmt.common.navigation.doNavigate
-import eu.darken.adsbmt.common.observe2
 import eu.darken.adsbmt.common.uix.Fragment3
 import eu.darken.adsbmt.common.viewbinding.viewBinding
 import eu.darken.adsbmt.databinding.MainFragmentBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainFragment : Fragment3(R.layout.main_fragment) {
+class DashboardFragment : Fragment3(R.layout.main_fragment) {
 
-    override val vm: MainFragmentVM by viewModels()
+    override val vm: DashboardFragmentVM by viewModels()
     override val ui: MainFragmentBinding by viewBinding()
 
-    @Inject lateinit var someAdapter: SomeAdapter
+    @Inject lateinit var dashCardAdapter: DashCardAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         ui.toolbar.apply {
             setOnMenuItemClickListener {
                 when (it.itemId) {
-                    R.id.action_help -> {
-                        Snackbar.make(requireView(), R.string.app_name, Snackbar.LENGTH_SHORT).show()
-                        true
-                    }
                     R.id.action_settings -> {
-                        doNavigate(MainFragmentDirections.actionExampleFragmentToSettingsContainerFragment())
+                        doNavigate(DashboardFragmentDirections.actionExampleFragmentToSettingsContainerFragment())
                         true
                     }
                     else -> super.onOptionsItemSelected(it)
                 }
             }
-            subtitle = "Buildtype: ${BuildConfigWrap.BUILD_TYPE}"
         }
 
-        ui.list.setupDefaults(someAdapter)
+        ui.list.setupDefaults(dashCardAdapter, dividers = false)
 
         ui.fab.setOnClickListener { vm.refresh() }
 
-//        vm.listItems.observe2(this@MainFragment, ui) {
-//            someAdapter.update(it)
-//        }
+        vm.state.observe2(ui) {
+            dashCardAdapter.update(it.items)
+        }
 
         super.onViewCreated(view, savedInstanceState)
     }
