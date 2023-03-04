@@ -10,7 +10,7 @@ A tracker for meta data of ADS-B trackers.
 
 ## Screenshots
 
-<img src="https://github.com/d4rken-org/adsb-meta-tracker/raw/main/.assets/screenshots/1.png" width="200"><img src="https://github.com/d4rken-org/adsb-meta-tracker/raw/main/.assets/screenshots/2.png" width="200">
+<img src="https://github.com/d4rken/adsb-meta-tracker/raw/main/.assets/screenshots/1.png" width="200"><img src="https://github.com/d4rken/adsb-meta-tracker/raw/main/.assets/screenshots/2.png" width="200">
 
 ## License
 
