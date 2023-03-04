@@ -2,6 +2,16 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <Preference
+        android:icon="@drawable/ic_discord_onsurface"
+        android:key="social.discord.ogadsb"
+        android:title="OG ADS-B"
+        app:summary="Join OG ADS-B Discord. A community of ADS-B enthusiasts.">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://discord.gg/qcnsSuSw63" />
+    </Preference>
+
     <PreferenceCategory android:title="@string/settings_category_other_label">
 
         <Preference
