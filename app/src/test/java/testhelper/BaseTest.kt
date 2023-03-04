@@ -5,7 +5,6 @@ import eu.darken.adsbmt.common.debug.logging.Logging.Priority.VERBOSE
 import eu.darken.adsbmt.common.debug.logging.log
 import io.mockk.unmockkAll
 import org.junit.jupiter.api.AfterAll
-import testhelpers.logging.JUnitLogger
 
 
 open class BaseTest {

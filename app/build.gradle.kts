@@ -214,4 +214,23 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.android.material:material:1.5.0-rc01")
 
+    // Testing
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.junit.vintage:junit-vintage-engine:5.8.2")
+    testImplementation("androidx.test:core-ktx:1.4.0")
+
+    testImplementation("io.mockk:mockk:1.12.4")
+
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.8.2")
+
+
+    testImplementation("io.kotest:kotest-runner-junit5:5.3.0")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:5.3.0")
+    testImplementation("io.kotest:kotest-property-jvm:5.3.0")
+
+    testImplementation("android.arch.core:core-testing:1.1.1")
+    debugImplementation("androidx.test:core-ktx:1.4.0")
+
 }
