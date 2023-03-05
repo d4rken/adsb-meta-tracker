@@ -6,12 +6,17 @@ import retrofit2.http.GET
 
 interface AdsbFiStatsApiV1 {
     /**
-     * {"beastFeeders":"781","mlatFeeders":"712"}
+     * {
+     *  "beastFeeders": "797",
+     *  "mlatFeeders": "713",
+     *  "totalAircraft": 3200
+     * }
      */
     @JsonClass(generateAdapter = true)
     data class Stats(
         @Json(name = "beastFeeders") val beastFeeders: Int,
         @Json(name = "mlatFeeders") val mlatFeeders: Int,
+        @Json(name = "totalAircraft") val totalAircraft: Int,
     )
 
     @GET("stats")

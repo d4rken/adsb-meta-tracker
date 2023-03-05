@@ -52,6 +52,7 @@ class AdsbFiStatsRepo @Inject constructor(
         val statsEntity = AdsbFiNetworkStatsEntity(
             beastFeeders = stats.beastFeeders,
             mlatFeeders = stats.mlatFeeders,
+            totalAircraft = stats.totalAircraft,
             createdAt = Instant.now()
         )
         val rowId = database.networkStats().insert(statsEntity)
