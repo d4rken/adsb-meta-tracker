@@ -182,10 +182,12 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
 
-    implementation( "androidx.room:room-runtime:2.5.0")
-    implementation( "androidx.room:room-ktx:2.5.0")
-    annotationProcessor( "androidx.room:room-compiler:2.5.0")
-    kapt ("androidx.room:room-compiler:2.5.0")
+    implementation("net.swiftzer.semver:semver:1.2.0")
+
+    implementation("androidx.room:room-runtime:2.5.0")
+    implementation("androidx.room:room-ktx:2.5.0")
+    annotationProcessor("androidx.room:room-compiler:2.5.0")
+    kapt("androidx.room:room-compiler:2.5.0")
 
     // Support libs
     implementation("androidx.core:core-ktx:1.8.0")

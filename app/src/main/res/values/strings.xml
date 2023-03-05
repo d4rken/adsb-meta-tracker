@@ -43,4 +43,6 @@
     <string name="widget_adsbfi_stats_description">adsb.fi related statistics.</string>
     <string name="adsbfi_label">adsb.fi</string>
     <string name="feeder_aircraft_label">Aircraft</string>
+    <string name="updater_new_release_message">New release available</string>
+    <string name="general_show_action">Show</string>
 </resources>
