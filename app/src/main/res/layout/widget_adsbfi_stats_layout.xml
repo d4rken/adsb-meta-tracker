@@ -22,7 +22,7 @@
             android:id="@+id/tracker_icon"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:src="@drawable/ic_airplane_24"
+            android:src="@drawable/ic_tracker_adsbfi"
             tools:ignore="ContentDescription" />
 
         <TextView

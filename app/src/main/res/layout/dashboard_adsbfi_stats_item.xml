@@ -19,7 +19,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="16dp"
-            android:src="@drawable/ic_airplane_24"
+            android:src="@drawable/ic_tracker_adsbfi"
             app:layout_constraintBottom_toBottomOf="@id/tracker_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/tracker_name_label"
