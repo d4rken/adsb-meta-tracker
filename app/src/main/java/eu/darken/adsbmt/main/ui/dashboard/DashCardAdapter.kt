@@ -11,7 +11,7 @@ import eu.darken.adsbmt.common.lists.differ.setupDiffer
 import eu.darken.adsbmt.common.lists.modular.ModularAdapter
 import eu.darken.adsbmt.common.lists.modular.mods.DataBinderMod
 import eu.darken.adsbmt.common.lists.modular.mods.TypedVHCreatorMod
-import eu.darken.adsbmt.adsbfi.ui.dash.AdsbFiStatsCardVH
+import eu.darken.adsbmt.networkstats.ui.dashboard.NetworkStatsCardVH
 import javax.inject.Inject
 
 
@@ -23,7 +23,7 @@ class DashCardAdapter @Inject constructor() :
 
     init {
         modules.add(DataBinderMod(data))
-        modules.add(TypedVHCreatorMod({ data[it] is AdsbFiStatsCardVH.Item }) { AdsbFiStatsCardVH(it) })
+        modules.add(TypedVHCreatorMod({ data[it] is NetworkStatsCardVH.Item }) { NetworkStatsCardVH(it) })
     }
 
     override fun getItemCount(): Int = data.size

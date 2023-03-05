@@ -1,37 +1,41 @@
-package eu.darken.adsbmt.adsbfi.ui.dash
+package eu.darken.adsbmt.networkstats.ui.dashboard
 
+import android.content.Intent
 import android.content.res.ColorStateList
+import android.net.Uri
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import eu.darken.adsbmt.R
-import eu.darken.adsbmt.adsbfi.core.AdsbFiStats
 import eu.darken.adsbmt.common.lists.binding
-import eu.darken.adsbmt.databinding.DashboardAdsbfiStatsItemBinding
+import eu.darken.adsbmt.databinding.DashboardNetworkStatsItemBinding
 import eu.darken.adsbmt.main.ui.dashboard.DashCardAdapter
+import eu.darken.adsbmt.networkstats.core.NetworkStats
 
-class AdsbFiStatsCardVH(parent: ViewGroup) :
-    DashCardAdapter.BaseVH<AdsbFiStatsCardVH.Item, DashboardAdsbfiStatsItemBinding>(
-        R.layout.dashboard_adsbfi_stats_item,
+class NetworkStatsCardVH(parent: ViewGroup) :
+    DashCardAdapter.BaseVH<NetworkStatsCardVH.Item, DashboardNetworkStatsItemBinding>(
+        R.layout.dashboard_network_stats_item,
         parent
     ) {
 
     override val viewBinding = lazy {
-        DashboardAdsbfiStatsItemBinding.bind(itemView)
+        DashboardNetworkStatsItemBinding.bind(itemView)
     }
 
     fun TextView.setTrendColor(trend: Int) {
         setTextColor(
-            when {
-                trend > 0 -> getColorForAttr(R.attr.colorPrimary)
-                trend < 0 -> getColorForAttr(R.attr.errorTextColor)
-                else -> getColorForAttr(android.R.attr.textColor)
-            }
+            getColorForAttr(
+                when {
+                    trend > 0 -> R.attr.colorPrimary
+                    trend < 0 -> R.attr.colorError
+                    else -> R.attr.colorControlNormal
+                }
+            )
         )
     }
 
     fun TextView.setTrendText(trend: Int) {
-        text = if (trend > 0) "+$trend" else if (trend < 0) "-$trend" else ""
+        text = if (trend > 0) "+$trend" else if (trend < 0) "$trend" else ""
     }
 
     fun ImageView.setTrendIcon(trend: Int) {
@@ -47,7 +51,7 @@ class AdsbFiStatsCardVH(parent: ViewGroup) :
                 when {
                     trend > 0 -> R.attr.colorPrimary
                     trend < 0 -> R.attr.colorError
-                    else -> android.R.attr.textColor
+                    else -> R.attr.colorControlNormal
                 }
             )
         )
@@ -55,6 +59,9 @@ class AdsbFiStatsCardVH(parent: ViewGroup) :
 
     override val onBindData = binding(payload = true) { item ->
         val stats = item.stats
+
+        trackerIcon.setImageResource(stats.network.iconRes)
+        trackerName.setText(stats.network.labelRes)
 
         val beastTrend = stats.beastFeeders - stats.beastFeedersPrevious
         feederBeastValue.text = stats.beastFeeders.toString()
@@ -81,11 +88,18 @@ class AdsbFiStatsCardVH(parent: ViewGroup) :
         feederAircraftValueTrendIcon.setTrendIcon(aircraftTrend)
 
         updatedAtValue.text = stats.updatedAt.toString()
+
+        viewWebsiteAction.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse(item.stats.network.website)
+            }
+            context.startActivity(intent)
+        }
     }
 
     data class Item(
-        val stats: AdsbFiStats,
+        val stats: NetworkStats,
     ) : DashCardAdapter.Item {
-        override val stableId: Long = Item::class.hashCode().toLong()
+        override val stableId: Long = stats.network.labelRes.toLong()
     }
 }

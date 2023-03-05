@@ -12,8 +12,6 @@ import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 import eu.darken.adsbmt.R
 import eu.darken.adsbmt.adsbfi.core.AdsbFiStats
-import eu.darken.adsbmt.adsbfi.core.AdsbFiStatsManager
-import eu.darken.adsbmt.adsbfi.core.AdsbFiStatsRepo
 import eu.darken.adsbmt.common.coroutine.AppScope
 import eu.darken.adsbmt.common.debug.logging.Logging.Priority.ERROR
 import eu.darken.adsbmt.common.debug.logging.Logging.Priority.VERBOSE
@@ -22,20 +20,20 @@ import eu.darken.adsbmt.common.debug.logging.log
 import eu.darken.adsbmt.common.debug.logging.logTag
 import eu.darken.adsbmt.common.getColorForAttr
 import eu.darken.adsbmt.main.ui.MainActivity
+import eu.darken.adsbmt.networkstats.core.NetworkStatsRepo
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
 import java.time.Duration
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AdsbfiStatsWidgetProvider : AppWidgetProvider() {
+class AdsbFiStatsWidgetProvider : AppWidgetProvider() {
 
     @AppScope @Inject lateinit var appScope: CoroutineScope
-    @Inject lateinit var statsRepo: AdsbFiStatsRepo
-    @Inject lateinit var statsManager: AdsbFiStatsManager
+    @Inject lateinit var statsRepo: NetworkStatsRepo
 
     private fun executeAsync(
         tag: String,
@@ -90,12 +88,9 @@ class AdsbfiStatsWidgetProvider : AppWidgetProvider() {
     ) {
         log(TAG) { "updateWidget(widgetId=$widgetId, options=$options)" }
 
-        var stats = statsRepo.latest.first()
-        if (stats.beastFeeders == -1) {
-            log(TAG) { "Stats unavailable, forcing refresh" }
-            statsRepo.refresh()
-            stats = statsRepo.latest.filter { it.beastFeeders != -1 }.first()
-        }
+        val stats = statsRepo.latest
+            .map { it.stats.filterIsInstance<AdsbFiStats>().singleOrNull() }
+            .first() ?: return
         val layout = createLayout(context, stats)
         widgetManager.updateAppWidget(widgetId, layout)
     }

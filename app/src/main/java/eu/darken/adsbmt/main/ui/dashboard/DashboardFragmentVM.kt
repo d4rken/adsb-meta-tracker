@@ -2,8 +2,6 @@ package eu.darken.adsbmt.main.ui.dashboard
 
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
-import eu.darken.adsbmt.adsbfi.core.AdsbFiStatsRepo
-import eu.darken.adsbmt.adsbfi.ui.dash.AdsbFiStatsCardVH
 import eu.darken.adsbmt.common.BuildConfigWrap
 import eu.darken.adsbmt.common.coroutine.DispatcherProvider
 import eu.darken.adsbmt.common.debug.logging.Logging.Priority.ERROR
@@ -11,6 +9,8 @@ import eu.darken.adsbmt.common.debug.logging.asLog
 import eu.darken.adsbmt.common.debug.logging.log
 import eu.darken.adsbmt.common.github.GithubReleaseCheck
 import eu.darken.adsbmt.common.uix.ViewModel3
+import eu.darken.adsbmt.networkstats.core.NetworkStatsRepo
+import eu.darken.adsbmt.networkstats.ui.dashboard.NetworkStatsCardVH
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flow
@@ -20,9 +20,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DashboardFragmentVM @Inject constructor(
-    handle: SavedStateHandle,
+    @Suppress("UNUSED_PARAMETER") handle: SavedStateHandle,
     dispatcherProvider: DispatcherProvider,
-    private val statsRepo: AdsbFiStatsRepo,
+    private val networkStatsRepo: NetworkStatsRepo,
     private val githubReleaseCheck: GithubReleaseCheck,
 ) : ViewModel3(dispatcherProvider = dispatcherProvider) {
 
@@ -56,14 +56,14 @@ class DashboardFragmentVM @Inject constructor(
         }
         .asLiveData2()
 
-    val state = statsRepo.latest
-        .map { adsbFiStats ->
-            val items = mutableListOf<DashCardAdapter.Item>()
-            AdsbFiStatsCardVH.Item(
-                stats = adsbFiStats
-            ).run { items.add(this) }
+    val state = networkStatsRepo.latest
+        .map { state ->
+            val items = state.stats.map {
+                NetworkStatsCardVH.Item(stats = it)
+            }
+
             State(
-                items = items
+                items = items.sortedByDescending { it.stats.beastFeeders }
             )
         }
         .asLiveData2()
@@ -73,7 +73,7 @@ class DashboardFragmentVM @Inject constructor(
     )
 
     fun refresh() = launch {
-        statsRepo.refresh()
+        networkStatsRepo.refresh()
     }
 
 }

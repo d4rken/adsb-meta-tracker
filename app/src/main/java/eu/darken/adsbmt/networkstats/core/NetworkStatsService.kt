@@ -1,4 +1,4 @@
-package eu.darken.adsbmt.adsbfi.core
+package eu.darken.adsbmt.networkstats.core
 
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
@@ -9,7 +9,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import dagger.hilt.android.qualifiers.ApplicationContext
-import eu.darken.adsbmt.adsbfi.ui.widget.AdsbfiStatsWidgetProvider
+import eu.darken.adsbmt.adsbfi.ui.widget.AdsbFiStatsWidgetProvider
 import eu.darken.adsbmt.common.BuildConfigWrap
 import eu.darken.adsbmt.common.coroutine.AppScope
 import eu.darken.adsbmt.common.debug.logging.Logging.Priority.ERROR
@@ -30,11 +30,11 @@ import javax.inject.Singleton
 
 
 @Singleton
-class AdsbFiStatsManager @Inject constructor(
+class NetworkStatsService @Inject constructor(
     @AppScope private val appScope: CoroutineScope,
     @ApplicationContext private val context: Context,
     private val workManager: WorkManager,
-    private val repo: AdsbFiStatsRepo,
+    private val networkStatsRepo: NetworkStatsRepo,
 ) {
 
     private val widgetManager by lazy { AppWidgetManager.getInstance(context) }
@@ -50,7 +50,7 @@ class AdsbFiStatsManager @Inject constructor(
 
         setupPeriodicWorker()
 
-        repo.latest
+        networkStatsRepo.latest
             .throttleLatest(2000)
             .take(1)
             .onEach { refreshWidgets() }
@@ -58,12 +58,12 @@ class AdsbFiStatsManager @Inject constructor(
             .launchIn(appScope)
 
         appScope.launch {
-            repo.refresh()
+            networkStatsRepo.refresh()
         }
     }
 
     private fun setupPeriodicWorker() {
-        val workRequest = PeriodicWorkRequestBuilder<AdsbFiStatsWorker>(
+        val workRequest = PeriodicWorkRequestBuilder<NetworkStatsWorker>(
             Duration.ofHours(6),
             Duration.ofMinutes(60)
         ).apply {
@@ -84,8 +84,6 @@ class AdsbFiStatsManager @Inject constructor(
     private suspend fun refreshWidgets() {
         log(TAG) { "refreshWidgets()" }
 
-        repo.refresh()
-
         log(TAG, VERBOSE) { "Notifying these widget IDs: ${currentWidgetIds.toList()}" }
 
         val intent = Intent(context, PROVIDER_CLASS).apply {
@@ -96,7 +94,7 @@ class AdsbFiStatsManager @Inject constructor(
     }
 
     companion object {
-        val PROVIDER_CLASS = AdsbfiStatsWidgetProvider::class.java
-        val TAG = logTag("Widget", "Manager")
+        val PROVIDER_CLASS = AdsbFiStatsWidgetProvider::class.java
+        val TAG = logTag("Network", "Stats", "Service")
     }
 }

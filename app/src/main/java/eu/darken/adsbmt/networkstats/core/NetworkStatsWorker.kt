@@ -1,4 +1,4 @@
-package eu.darken.adsbmt.adsbfi.core
+package eu.darken.adsbmt.networkstats.core
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
@@ -12,20 +12,18 @@ import eu.darken.adsbmt.common.debug.logging.Logging.Priority.VERBOSE
 import eu.darken.adsbmt.common.debug.logging.log
 import eu.darken.adsbmt.common.debug.logging.logTag
 import kotlinx.coroutines.*
-import javax.inject.Inject
 
 
 @HiltWorker
-class AdsbFiStatsWorker @AssistedInject constructor(
+class NetworkStatsWorker @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted private val params: WorkerParameters,
     private val dispatcherProvider: DispatcherProvider,
+    private val networkStatsRepo: NetworkStatsRepo
 ) : CoroutineWorker(context, params) {
 
     private val workerScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private var finishedWithError = false
-
-    @Inject lateinit var statsRepo: AdsbFiStatsRepo
 
     init {
         log(TAG, VERBOSE) { "init(): workerId=$id" }
@@ -56,8 +54,8 @@ class AdsbFiStatsWorker @AssistedInject constructor(
 
     private suspend fun doDoWork() = withContext(dispatcherProvider.IO) {
         try {
-            withTimeout(15 * 1000) {
-                statsRepo.refresh()
+            withTimeout(30 * 1000) {
+                networkStatsRepo.refresh()
             }
             log(TAG) { "Worker" }
         } catch (e: TimeoutCancellationException) {
@@ -66,6 +64,6 @@ class AdsbFiStatsWorker @AssistedInject constructor(
     }
 
     companion object {
-        val TAG = logTag("AdsbFi", "Stats", "Worker")
+        val TAG = logTag("Network", "Stats", "Worker")
     }
 }

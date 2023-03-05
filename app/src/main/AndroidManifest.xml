@@ -24,7 +24,7 @@
         </activity>
 
         <receiver
-            android:name=".adsbfi.ui.widget.AdsbfiStatsWidgetProvider"
+            android:name=".adsbfi.ui.widget.AdsbFiStatsWidgetProvider"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

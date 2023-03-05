@@ -7,9 +7,8 @@ import dagger.hilt.android.HiltAndroidApp
 import eu.darken.adsbmt.common.BuildConfigWrap
 import eu.darken.adsbmt.common.coroutine.AppScope
 import eu.darken.adsbmt.common.debug.logging.*
-import eu.darken.adsbmt.adsbfi.core.AdsbFiStatsManager
+import eu.darken.adsbmt.networkstats.core.NetworkStatsService
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -17,7 +16,7 @@ open class App : Application(), Configuration.Provider {
 
     @Inject @AppScope lateinit var appScope: CoroutineScope
     @Inject lateinit var workerFactory: HiltWorkerFactory
-    @Inject lateinit var adsbFiStatsManager: AdsbFiStatsManager
+    @Inject lateinit var networkStatsService: NetworkStatsService
 
     override fun onCreate() {
         super.onCreate()
@@ -26,7 +25,7 @@ open class App : Application(), Configuration.Provider {
             log(TAG) { "BuildConfig.DEBUG=true" }
         }
 
-        adsbFiStatsManager.setup()
+        networkStatsService.setup()
 
         log(TAG) { "onCreate() done! ${Exception().asLog()}" }
     }

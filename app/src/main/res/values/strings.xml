@@ -45,4 +45,6 @@
     <string name="feeder_aircraft_label">Aircraft</string>
     <string name="updater_new_release_message">New release available</string>
     <string name="general_show_action">Show</string>
+    <string name="adsbone_label">ADS-B One</string>
+    <string name="general_website_action">Website</string>
 </resources>

@@ -1,11 +1,11 @@
-package eu.darken.adsbmt.adsbfi.core
+package eu.darken.adsbmt.adsbone.core
 
 import eu.darken.adsbmt.networkstats.core.AdsbNetwork
 import eu.darken.adsbmt.networkstats.core.NetworkStats
 import java.time.Instant
 
-data class AdsbFiStats(
-    override val network: AdsbNetwork = AdsbFi,
+data class AdsbOneStats(
+    override val network: AdsbNetwork = AdsbOne,
     override val beastFeeders: Int,
     override val beastFeedersPrevious: Int,
     override val mlatFeeders: Int,
