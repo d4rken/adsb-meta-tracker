@@ -22,6 +22,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import java.time.Duration
 import javax.inject.Inject
@@ -50,7 +51,8 @@ class AdsbFiStatsManager @Inject constructor(
         setupPeriodicWorker()
 
         repo.latest
-            .throttleLatest(5000)
+            .throttleLatest(2000)
+            .take(1)
             .onEach { refreshWidgets() }
             .catch { log(TAG, ERROR) { "Automatic widget updates failed: ${it.asLog()}" } }
             .launchIn(appScope)
