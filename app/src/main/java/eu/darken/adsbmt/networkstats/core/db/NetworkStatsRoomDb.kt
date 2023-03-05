@@ -1,10 +1,13 @@
 package eu.darken.adsbmt.networkstats.core.db
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import eu.darken.adsbmt.adsbfi.core.db.AdsbFiNetworkStatsDao
 import eu.darken.adsbmt.adsbfi.core.db.AdsbFiNetworkStatsEntity
+import eu.darken.adsbmt.adsblol.core.db.AdsbLolNetworkStatsDao
+import eu.darken.adsbmt.adsblol.core.db.AdsbLolNetworkStatsEntity
 import eu.darken.adsbmt.adsbone.core.db.AdsbOneNetworkStatsDao
 import eu.darken.adsbmt.adsbone.core.db.AdsbOneNetworkStatsEntity
 import eu.darken.adsbmt.common.room.InstantConverter
@@ -13,12 +16,17 @@ import eu.darken.adsbmt.common.room.InstantConverter
     entities = [
         AdsbFiNetworkStatsEntity::class,
         AdsbOneNetworkStatsEntity::class,
+        AdsbLolNetworkStatsEntity::class,
     ],
-    version = 1,
+    version = 2,
+    autoMigrations = [
+        AutoMigration(1, 2)
+    ],
     exportSchema = true,
 )
 @TypeConverters(InstantConverter::class)
 abstract class NetworkStatsRoomDb : RoomDatabase() {
     abstract fun adsbFi(): AdsbFiNetworkStatsDao
     abstract fun adsbOne(): AdsbOneNetworkStatsDao
+    abstract fun adsbLol(): AdsbLolNetworkStatsDao
 }

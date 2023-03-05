@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import dagger.hilt.android.qualifiers.ApplicationContext
 import eu.darken.adsbmt.adsbfi.core.db.AdsbFiNetworkStatsDao
+import eu.darken.adsbmt.adsblol.core.db.AdsbLolNetworkStatsDao
 import eu.darken.adsbmt.adsbone.core.db.AdsbOneNetworkStatsDao
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -25,4 +26,7 @@ class NetworkStatsDatabase @Inject constructor(
 
     val adsbOne: AdsbOneNetworkStatsDao
         get() = database.adsbOne()
+
+    val adsbLol: AdsbLolNetworkStatsDao
+        get() = database.adsbLol()
 }

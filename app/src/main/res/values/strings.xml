@@ -47,4 +47,5 @@
     <string name="general_show_action">Show</string>
     <string name="adsbone_label">ADS-B One</string>
     <string name="general_website_action">Website</string>
+    <string name="adsblol_label">ADSB.lol</string>
 </resources>
