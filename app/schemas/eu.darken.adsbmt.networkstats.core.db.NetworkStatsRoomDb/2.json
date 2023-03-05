@@ -1,0 +1,149 @@
+{
+  "formatVersion": 1,
+  "database": {
+	"version": 2,
+	"identityHash": "d29afc3c8146fbfa5eb683feb6feb140",
+	"entities": [
+	  {
+		"tableName": "stats_adsbfi",
+		"createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `beast_feeders` INTEGER NOT NULL, `mlat_feeders` INTEGER NOT NULL, `totalAircraft` INTEGER NOT NULL DEFAULT 0, `created_at` INTEGER NOT NULL)",
+		"fields": [
+		  {
+			"fieldPath": "id",
+			"columnName": "id",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "beastFeeders",
+			"columnName": "beast_feeders",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "mlatFeeders",
+			"columnName": "mlat_feeders",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "totalAircraft",
+			"columnName": "totalAircraft",
+			"affinity": "INTEGER",
+			"notNull": true,
+			"defaultValue": "0"
+		  },
+		  {
+			"fieldPath": "createdAt",
+			"columnName": "created_at",
+			"affinity": "INTEGER",
+			"notNull": true
+		  }
+		],
+		"primaryKey": {
+		  "autoGenerate": true,
+		  "columnNames": [
+			"id"
+		  ]
+		},
+		"indices": [],
+		"foreignKeys": []
+	  },
+	  {
+		"tableName": "stats_adsbone",
+		"createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `beast_feeders` INTEGER NOT NULL, `mlat_feeders` INTEGER NOT NULL, `totalAircraft` INTEGER NOT NULL DEFAULT 0, `created_at` INTEGER NOT NULL)",
+		"fields": [
+		  {
+			"fieldPath": "id",
+			"columnName": "id",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "beastFeeders",
+			"columnName": "beast_feeders",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "mlatFeeders",
+			"columnName": "mlat_feeders",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "totalAircraft",
+			"columnName": "totalAircraft",
+			"affinity": "INTEGER",
+			"notNull": true,
+			"defaultValue": "0"
+		  },
+		  {
+			"fieldPath": "createdAt",
+			"columnName": "created_at",
+			"affinity": "INTEGER",
+			"notNull": true
+		  }
+		],
+		"primaryKey": {
+		  "autoGenerate": true,
+		  "columnNames": [
+			"id"
+		  ]
+		},
+		"indices": [],
+		"foreignKeys": []
+	  },
+	  {
+		"tableName": "stats_adsblol",
+		"createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `beast_feeders` INTEGER NOT NULL, `mlat_feeders` INTEGER NOT NULL, `totalAircraft` INTEGER NOT NULL DEFAULT 0, `created_at` INTEGER NOT NULL)",
+		"fields": [
+		  {
+			"fieldPath": "id",
+			"columnName": "id",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "beastFeeders",
+			"columnName": "beast_feeders",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "mlatFeeders",
+			"columnName": "mlat_feeders",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "totalAircraft",
+			"columnName": "totalAircraft",
+			"affinity": "INTEGER",
+			"notNull": true,
+			"defaultValue": "0"
+		  },
+		  {
+			"fieldPath": "createdAt",
+			"columnName": "created_at",
+			"affinity": "INTEGER",
+			"notNull": true
+		  }
+		],
+		"primaryKey": {
+		  "autoGenerate": true,
+		  "columnNames": [
+			"id"
+		  ]
+		},
+		"indices": [],
+		"foreignKeys": []
+	  }
+	],
+	"views": [],
+	"setupQueries": [
+	  "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+	  "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd29afc3c8146fbfa5eb683feb6feb140')"
+	]
+  }
+}
