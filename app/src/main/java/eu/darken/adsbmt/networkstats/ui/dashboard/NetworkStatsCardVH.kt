@@ -80,7 +80,7 @@ class NetworkStatsCardVH(parent: ViewGroup) :
         feederMlatValueTrendIcon.setTrendIcon(mlatTrend)
 
         val aircraftTrend = stats.totalAircraft - stats.totalAircraftPrevious
-        feederAircraftValue.text = stats.totalAircraft.toString()
+        feederAircraftValue.text = stats.totalAircraft.takeIf { it != 0 }?.toString() ?: "?"
         feederAircraftValueTrendValue.apply {
             setTrendText(aircraftTrend)
             setTrendColor(aircraftTrend)
