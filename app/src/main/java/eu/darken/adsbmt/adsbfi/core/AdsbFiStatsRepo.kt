@@ -39,6 +39,7 @@ class AdsbFiStatsRepo @Inject constructor(
             AdsbFiStats(
                 beastFeeders = it?.beastFeeders ?: -1,
                 mlatFeeders = it?.mlatFeeders ?: -1,
+                totalAircraft = it?.totalAircraft ?: -1,
                 updatedAt = it?.createdAt ?: Instant.EPOCH
             )
         }

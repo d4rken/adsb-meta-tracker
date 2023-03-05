@@ -42,4 +42,5 @@
 
     <string name="widget_adsbfi_stats_description">adsb.fi related statistics.</string>
     <string name="adsbfi_label">adsb.fi</string>
+    <string name="feeder_aircraft_label">Aircraft</string>
 </resources>

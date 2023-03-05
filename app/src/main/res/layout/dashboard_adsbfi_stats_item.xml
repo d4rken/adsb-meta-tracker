@@ -14,17 +14,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/tracker_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/ic_airplane_24"
+            app:layout_constraintBottom_toBottomOf="@id/tracker_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tracker_name_label" />
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tracker_name_label"
             style="@style/TextAppearance.Material3.LabelMedium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:gravity="center_vertical"
             android:text="@string/platform_label"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tracker_name"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -32,9 +41,10 @@
             style="@style/TextAppearance.Material3.TitleMedium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:gravity="center_vertical"
             android:text="@string/adsbfi_label"
-            app:layout_constraintStart_toStartOf="@id/tracker_name_label"
+            app:layout_constraintStart_toEndOf="@id/tracker_icon"
             app:layout_constraintTop_toBottomOf="@id/tracker_name_label" />
 
         <ImageView
@@ -96,7 +106,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="16dp"
-            android:src="@drawable/ic_antenna_24"
+            android:src="@drawable/ic_abacus_24"
             app:layout_constraintBottom_toBottomOf="@id/feeder_mlat_label"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/feeder_mlat_label" />
@@ -109,9 +119,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
             android:text="@string/feeder_mlat_label"
-            app:layout_constraintBottom_toTopOf="@id/updated_at_value"
+            app:layout_constraintBottom_toTopOf="@id/feeder_aircraft_label"
             app:layout_constraintEnd_toStartOf="@id/feeder_mlat_value"
             app:layout_constraintStart_toEndOf="@id/feeder_mlat_icon"
             app:layout_constraintTop_toBottomOf="@id/feeder_beast_label" />
@@ -146,6 +155,63 @@
             app:layout_constraintBottom_toBottomOf="@id/feeder_mlat_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/feeder_mlat_label" />
+
+
+        <ImageView
+            android:id="@+id/feeder_aircraft_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/ic_airplane_24"
+            app:layout_constraintBottom_toBottomOf="@id/feeder_aircraft_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/feeder_aircraft_label" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/feeder_aircraft_label"
+            style="@style/TextAppearance.Material3.BodyLarge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/feeder_aircraft_label"
+            app:layout_constraintBottom_toTopOf="@id/updated_at_value"
+            app:layout_constraintEnd_toStartOf="@id/feeder_aircraft_value"
+            app:layout_constraintStart_toEndOf="@id/feeder_aircraft_icon"
+            app:layout_constraintTop_toBottomOf="@id/feeder_mlat_label" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/feeder_aircraft_value"
+            style="@style/TextAppearance.Material3.BodyLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/feeder_aircraft_label"
+            app:layout_constraintEnd_toStartOf="@id/feeder_aircraft_value_trend_value"
+            app:layout_constraintTop_toTopOf="@id/feeder_aircraft_label"
+            tools:text="9999" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/feeder_aircraft_value_trend_value"
+            style="@style/TextAppearance.Material3.LabelMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/feeder_aircraft_label"
+            app:layout_constraintEnd_toStartOf="@id/feeder_aircraft_value_trend_icon"
+            app:layout_constraintTop_toTopOf="@id/feeder_aircraft_label"
+            tools:text="+99%" />
+
+        <ImageView
+            android:id="@+id/feeder_aircraft_value_trend_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_trending_up_24"
+            app:layout_constraintBottom_toBottomOf="@id/feeder_aircraft_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/feeder_aircraft_label" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/updated_at_value"

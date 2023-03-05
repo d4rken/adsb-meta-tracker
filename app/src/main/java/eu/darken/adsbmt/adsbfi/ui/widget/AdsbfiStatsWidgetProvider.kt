@@ -113,6 +113,7 @@ class AdsbfiStatsWidgetProvider : AppWidgetProvider() {
 
         setTextViewText(R.id.total_value, stats.beastFeeders.toString())
         setTextViewText(R.id.mlat_value, stats.mlatFeeders.toString())
+        setTextViewText(R.id.aircraft_value, stats.totalAircraft.toString())
     }
 
     companion object {

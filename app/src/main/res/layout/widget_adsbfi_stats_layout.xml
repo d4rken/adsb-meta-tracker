@@ -20,14 +20,14 @@
 
         <ImageView
             android:id="@+id/tracker_icon"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:src="@drawable/ic_airplane_24"
             tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/tracker_label"
-            style="@style/TextAppearance.Material3.TitleMedium"
+            style="@style/TextAppearance.Material3.TitleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -44,14 +44,14 @@
 
         <ImageView
             android:id="@+id/total_icon"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:src="@drawable/ic_antenna_24"
             tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/total_label"
-            style="@style/TextAppearance.Material3.BodyMedium"
+            style="@style/TextAppearance.Material3.LabelMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -75,8 +75,8 @@
 
         <ImageView
             android:id="@+id/total_trend_icon"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:src="@drawable/ic_trending_up_24"
             app:tint="?colorPrimary"
             tools:ignore="ContentDescription" />
@@ -87,20 +87,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="8dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/mlat_icon"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:src="@drawable/ic_abacus_24"
             tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/mlat_label"
-            style="@style/TextAppearance.Material3.BodyMedium"
+            style="@style/TextAppearance.Material3.LabelMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -124,8 +123,55 @@
 
         <ImageView
             android:id="@+id/mlat_trend_icon"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_trending_up_24"
+            app:tint="?colorPrimary"
+            tools:ignore="ContentDescription" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/aircraft_icon"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_airplane_24"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/aircraft_label"
+            style="@style/TextAppearance.Material3.LabelMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text="@string/feeder_aircraft_label"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/aircraft_value"
+            style="@style/TextAppearance.Material3.BodyMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="2dp"
+            android:layout_weight="0"
+            android:text="\?"
+            tools:ignore="HardcodedText"
+            tools:text="9002" />
+
+        <ImageView
+            android:id="@+id/aircraft_trend_icon"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:src="@drawable/ic_trending_up_24"
             app:tint="?colorPrimary"
             tools:ignore="ContentDescription" />

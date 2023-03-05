@@ -21,6 +21,7 @@ class AdsbFiStatsCardVH(parent: ViewGroup) :
         val stats = item.stats
         feederBeastValue.text = stats.beastFeeders.toString()
         feederMlatValue.text = stats.mlatFeeders.toString()
+        feederAircraftValue.text = stats.totalAircraft.toString()
         updatedAtValue.text = stats.updatedAt.toString()
     }
 
