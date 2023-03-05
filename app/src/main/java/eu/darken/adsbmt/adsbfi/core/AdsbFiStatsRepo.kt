@@ -7,7 +7,6 @@ import eu.darken.adsbmt.adsbfi.core.api.AdsbFiEndpoint
 import eu.darken.adsbmt.adsbfi.core.db.AdsbFiNetworkStatsEntity
 import eu.darken.adsbmt.adsbfi.core.db.AdsbFiStatsDatabase
 import eu.darken.adsbmt.common.coroutine.AppScope
-import eu.darken.adsbmt.common.coroutine.DispatcherProvider
 import eu.darken.adsbmt.common.debug.logging.log
 import eu.darken.adsbmt.common.debug.logging.logTag
 import eu.darken.adsbmt.common.flow.replayingShare
@@ -15,7 +14,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
+import java.time.Duration
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -24,7 +25,6 @@ import javax.inject.Singleton
 class AdsbFiStatsRepo @Inject constructor(
     @AppScope private val appScope: CoroutineScope,
     @ApplicationContext private val context: Context,
-    private val dispatcherProvider: DispatcherProvider,
     private val endpoint: AdsbFiEndpoint,
 ) {
 
@@ -35,14 +35,25 @@ class AdsbFiStatsRepo @Inject constructor(
         ).build()
     }
     val latest: Flow<AdsbFiStats> = database.networkStats().getLatest()
-        .map {
+        .map { latest ->
+            var previous = database.networkStats().getOlderStats(
+                Instant.now().minus(Duration.ofHours(24)).toEpochMilli()
+            )
+            if (previous == null) {
+                previous = database.networkStats().getAll().firstOrNull()
+            }
+            log(TAG) { "Stats from yesterday are: $previous" }
             AdsbFiStats(
-                beastFeeders = it?.beastFeeders ?: -1,
-                mlatFeeders = it?.mlatFeeders ?: -1,
-                totalAircraft = it?.totalAircraft ?: -1,
-                updatedAt = it?.createdAt ?: Instant.EPOCH
+                beastFeeders = latest?.beastFeeders ?: 0,
+                beastFeedersPrevious = previous?.beastFeeders ?: 0,
+                mlatFeeders = latest?.mlatFeeders ?: 0,
+                mlatFeedersPrevious = previous?.mlatFeeders ?: 0,
+                totalAircraft = latest?.totalAircraft ?: 0,
+                totalAircraftPrevious = previous?.totalAircraft ?: 0,
+                updatedAt = latest?.createdAt ?: Instant.EPOCH
             )
         }
+        .onEach { log(TAG) { "New display-stats: $it" } }
         .replayingShare(appScope)
 
     suspend fun refresh() = withContext(NonCancellable) {

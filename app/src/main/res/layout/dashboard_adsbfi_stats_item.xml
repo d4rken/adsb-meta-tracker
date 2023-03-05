@@ -22,7 +22,8 @@
             android:src="@drawable/ic_airplane_24"
             app:layout_constraintBottom_toBottomOf="@id/tracker_name"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tracker_name_label" />
+            app:layout_constraintTop_toTopOf="@id/tracker_name_label"
+            tools:ignore="ContentDescription" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tracker_name_label"
@@ -55,7 +56,8 @@
             android:src="@drawable/ic_antenna_24"
             app:layout_constraintBottom_toBottomOf="@id/feeder_beast_label"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/feeder_beast_label" />
+            app:layout_constraintTop_toTopOf="@id/feeder_beast_label"
+            tools:ignore="ContentDescription" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/feeder_beast_label"
@@ -93,13 +95,14 @@
 
         <ImageView
             android:id="@+id/feeder_beast_value_trend_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_trending_up_24"
             app:layout_constraintBottom_toBottomOf="@id/feeder_beast_label"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/feeder_beast_label" />
+            app:layout_constraintTop_toTopOf="@id/feeder_beast_label"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/feeder_mlat_icon"
@@ -109,7 +112,8 @@
             android:src="@drawable/ic_abacus_24"
             app:layout_constraintBottom_toBottomOf="@id/feeder_mlat_label"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/feeder_mlat_label" />
+            app:layout_constraintTop_toTopOf="@id/feeder_mlat_label"
+            tools:ignore="ContentDescription" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/feeder_mlat_label"
@@ -148,24 +152,26 @@
 
         <ImageView
             android:id="@+id/feeder_mlat_value_trend_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_trending_up_24"
             app:layout_constraintBottom_toBottomOf="@id/feeder_mlat_label"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/feeder_mlat_label" />
+            app:layout_constraintTop_toTopOf="@id/feeder_mlat_label"
+            tools:ignore="ContentDescription" />
 
 
         <ImageView
             android:id="@+id/feeder_aircraft_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginStart="16dp"
             android:src="@drawable/ic_airplane_24"
             app:layout_constraintBottom_toBottomOf="@id/feeder_aircraft_label"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/feeder_aircraft_label" />
+            app:layout_constraintTop_toTopOf="@id/feeder_aircraft_label"
+            tools:ignore="ContentDescription" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/feeder_aircraft_label"
@@ -205,13 +211,14 @@
 
         <ImageView
             android:id="@+id/feeder_aircraft_value_trend_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_trending_up_24"
             app:layout_constraintBottom_toBottomOf="@id/feeder_aircraft_label"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/feeder_aircraft_label" />
+            app:layout_constraintTop_toTopOf="@id/feeder_aircraft_label"
+            tools:ignore="ContentDescription" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/updated_at_value"

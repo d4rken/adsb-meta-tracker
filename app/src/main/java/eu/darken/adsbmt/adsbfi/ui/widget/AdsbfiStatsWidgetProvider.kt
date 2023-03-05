@@ -7,6 +7,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.RemoteViews
+import androidx.annotation.IdRes
+import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 import eu.darken.adsbmt.R
 import eu.darken.adsbmt.adsbfi.core.AdsbFiStats
@@ -18,6 +20,7 @@ import eu.darken.adsbmt.common.debug.logging.Logging.Priority.VERBOSE
 import eu.darken.adsbmt.common.debug.logging.asLog
 import eu.darken.adsbmt.common.debug.logging.log
 import eu.darken.adsbmt.common.debug.logging.logTag
+import eu.darken.adsbmt.common.getColorForAttr
 import eu.darken.adsbmt.main.ui.MainActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.filter
@@ -97,7 +100,7 @@ class AdsbfiStatsWidgetProvider : AppWidgetProvider() {
         widgetManager.updateAppWidget(widgetId, layout)
     }
 
-    private suspend fun createLayout(
+    private fun createLayout(
         context: Context,
         stats: AdsbFiStats
     ) = RemoteViews(context.packageName, R.layout.widget_adsbfi_stats_layout).apply {
@@ -112,8 +115,28 @@ class AdsbfiStatsWidgetProvider : AppWidgetProvider() {
         setOnClickPendingIntent(R.id.widget_root, pendingIntent)
 
         setTextViewText(R.id.total_value, stats.beastFeeders.toString())
+        setImageViewTrendIcon(context, R.id.total_trend_icon, stats.beastFeeders - stats.beastFeedersPrevious)
         setTextViewText(R.id.mlat_value, stats.mlatFeeders.toString())
+        setImageViewTrendIcon(context, R.id.mlat_trend_icon, stats.mlatFeeders - stats.mlatFeedersPrevious)
         setTextViewText(R.id.aircraft_value, stats.totalAircraft.toString())
+        setImageViewTrendIcon(context, R.id.aircraft_trend_icon, stats.totalAircraft - stats.totalAircraftPrevious)
+    }
+
+    fun RemoteViews.setImageViewTrendIcon(context: Context, @IdRes id: Int, trend: Int) {
+        setImageViewResource(
+            id,
+            when {
+                trend > 0 -> R.drawable.ic_trending_up_24
+                trend < 0 -> R.drawable.ic_trending_down_24
+                else -> R.drawable.ic_trending_flat_24
+            }
+        )
+        val tintColor = when {
+            trend > 0 -> ContextCompat.getColor(context, R.color.md_theme_light_primary)
+            trend < 0 -> ContextCompat.getColor(context, R.color.md_theme_light_error)
+            else -> context.getColorForAttr(android.R.attr.textColor)
+        }
+        setInt(id, "setColorFilter", tintColor)
     }
 
     companion object {
