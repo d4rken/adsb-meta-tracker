@@ -10,6 +10,8 @@ apply(plugin = "androidx.navigation.safeargs.kotlin")
 android {
     compileSdk = ProjectConfig.compileSdk
 
+    namespace = ProjectConfig.packageName
+
     defaultConfig {
         applicationId = ProjectConfig.packageName
 
@@ -130,7 +132,11 @@ android {
         }
     }
 
-    namespace = "eu.darken.adsbmt"
+    kapt {
+        arguments {
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
+    }
 }
 
 dependencies {
