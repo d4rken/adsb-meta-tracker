@@ -1,14 +1,42 @@
 package eu.darken.adsbmt.adsblol.core.api
 
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import retrofit2.http.GET
 
 interface AdsbLolStatsApiV1 {
 
+
+    @JsonClass(generateAdapter = true)
+    data class Data(
+        @Json(name = "global") val global: Global,
+    ) {
+        @JsonClass(generateAdapter = true)
+        data class Global(
+            @Json(name = "beast") val beast: Int,
+            @Json(name = "mlat") val mlat: Int,
+            @Json(name = "planes") val planes: Int,
+        )
+    }
+
     /**
-     * adsb_api_beast_total_receivers 323
-     * adsb_api_beast_total_clients 343
-     * adsb_api_mlat_total 239
-     */
-    @GET("metrics")
-    suspend fun getMetrics(): String
+    {
+    "client_ip": "...",
+    "clients": {
+    "beast": [],
+    "mlat": []
+    },
+    "feeding": {
+    "beast": false,
+    "mlat": false
+    },
+    "global": {
+    "beast": 334,
+    "mlat": 239,
+    "planes": 2318
+    }
+    }
+     **/
+    @GET("api/0/me")
+    suspend fun getMe(): Data
 }

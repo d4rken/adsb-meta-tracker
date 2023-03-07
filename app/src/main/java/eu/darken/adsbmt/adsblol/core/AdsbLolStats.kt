@@ -10,5 +10,7 @@ data class AdsbLolStats(
     override val feederActiveDiff: Int,
     override val mlatActive: Int,
     override val mlatActiveDiff: Int,
+    override val aircraftActive: Int,
+    override val aircraftActiveDiff: Int,
     override val updatedAt: Instant,
-) : NetworkStats, NetworkStats.Mlat
+) : NetworkStats, NetworkStats.Mlat, NetworkStats.Aircraft

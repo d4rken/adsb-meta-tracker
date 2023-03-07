@@ -1,0 +1,179 @@
+{
+  "formatVersion": 1,
+  "database": {
+	"version": 2,
+	"identityHash": "4e2e854eee0efaa29307321af8048ef0",
+	"entities": [
+	  {
+		"tableName": "stats_adsbfi",
+		"createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `feeder_active` INTEGER NOT NULL, `mlat_active` INTEGER NOT NULL, `aircraft_active` INTEGER NOT NULL, `created_at` INTEGER NOT NULL)",
+		"fields": [
+		  {
+			"fieldPath": "id",
+			"columnName": "id",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "feederActive",
+			"columnName": "feeder_active",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "mlatActive",
+			"columnName": "mlat_active",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "aircraftActive",
+			"columnName": "aircraft_active",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "createdAt",
+			"columnName": "created_at",
+			"affinity": "INTEGER",
+			"notNull": true
+		  }
+		],
+		"primaryKey": {
+		  "autoGenerate": true,
+		  "columnNames": [
+			"id"
+		  ]
+		},
+		"indices": [],
+		"foreignKeys": []
+	  },
+	  {
+		"tableName": "stats_adsbone",
+		"createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `feeder_active` INTEGER NOT NULL, `mlat_active` INTEGER NOT NULL, `created_at` INTEGER NOT NULL)",
+		"fields": [
+		  {
+			"fieldPath": "id",
+			"columnName": "id",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "feederActive",
+			"columnName": "feeder_active",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "mlatActive",
+			"columnName": "mlat_active",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "createdAt",
+			"columnName": "created_at",
+			"affinity": "INTEGER",
+			"notNull": true
+		  }
+		],
+		"primaryKey": {
+		  "autoGenerate": true,
+		  "columnNames": [
+			"id"
+		  ]
+		},
+		"indices": [],
+		"foreignKeys": []
+	  },
+	  {
+		"tableName": "stats_adsblol",
+		"createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `feeder_active` INTEGER NOT NULL, `mlat_active` INTEGER NOT NULL, `aircraft_active` INTEGER NOT NULL DEFAULT 0, `created_at` INTEGER NOT NULL)",
+		"fields": [
+		  {
+			"fieldPath": "id",
+			"columnName": "id",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "feederActive",
+			"columnName": "feeder_active",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "mlatActive",
+			"columnName": "mlat_active",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "aircraftActive",
+			"columnName": "aircraft_active",
+			"affinity": "INTEGER",
+			"notNull": true,
+			"defaultValue": "0"
+		  },
+		  {
+			"fieldPath": "createdAt",
+			"columnName": "created_at",
+			"affinity": "INTEGER",
+			"notNull": true
+		  }
+		],
+		"primaryKey": {
+		  "autoGenerate": true,
+		  "columnNames": [
+			"id"
+		  ]
+		},
+		"indices": [],
+		"foreignKeys": []
+	  },
+	  {
+		"tableName": "stats_airframes",
+		"createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `feeder_active` INTEGER NOT NULL, `aircraft_active` INTEGER NOT NULL, `created_at` INTEGER NOT NULL)",
+		"fields": [
+		  {
+			"fieldPath": "id",
+			"columnName": "id",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "feederActive",
+			"columnName": "feeder_active",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "aircraftActive",
+			"columnName": "aircraft_active",
+			"affinity": "INTEGER",
+			"notNull": true
+		  },
+		  {
+			"fieldPath": "createdAt",
+			"columnName": "created_at",
+			"affinity": "INTEGER",
+			"notNull": true
+		  }
+		],
+		"primaryKey": {
+		  "autoGenerate": true,
+		  "columnNames": [
+			"id"
+		  ]
+		},
+		"indices": [],
+		"foreignKeys": []
+	  }
+	],
+	"views": [],
+	"setupQueries": [
+	  "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+	  "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4e2e854eee0efaa29307321af8048ef0')"
+	]
+  }
+}

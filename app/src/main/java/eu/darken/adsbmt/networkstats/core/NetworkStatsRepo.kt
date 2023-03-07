@@ -89,6 +89,8 @@ class NetworkStatsRepo @Inject constructor(
                 feederActiveDiff = previous?.feederActive ?: 0,
                 mlatActive = latest?.mlatActive ?: 0,
                 mlatActiveDiff = previous?.mlatActive ?: 0,
+                aircraftActive = latest?.aircraftActive ?: 0,
+                aircraftActiveDiff = previous?.aircraftActive ?: 0,
                 updatedAt = latest?.createdAt ?: Instant.EPOCH
             )
         },
@@ -163,6 +165,7 @@ class NetworkStatsRepo @Inject constructor(
                 val statsEntity = AdsbLolNetworkStatsEntity(
                     feederActive = stats.beastFeeders,
                     mlatActive = stats.mlatFeeders,
+                    aircraftActive = stats.aircraftActive,
                     createdAt = Instant.now()
                 )
                 val rowId = database.adsbLol.insert(statsEntity)

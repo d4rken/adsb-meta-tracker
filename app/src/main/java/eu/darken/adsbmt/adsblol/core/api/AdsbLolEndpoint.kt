@@ -37,13 +37,12 @@ class AdsbLolEndpoint @Inject constructor(
     suspend fun getNetworkStats(): NetworkStats = withContext(dispatcherProvider.IO) {
         log(TAG) { "getNetworkStats()" }
 
-        val metrics = api.getMetrics().split("\n")
-        val feederActiveRaw = metrics[0]
-        val mlatActiveRaw = metrics[2]
+        val metrics = api.getMe()
 
         NetworkStats(
-            beastFeeders = feederActiveRaw.split(" ").last().toInt(),
-            mlatFeeders = mlatActiveRaw.split(" ").last().toInt(),
+            beastFeeders = metrics.global.beast,
+            mlatFeeders = metrics.global.mlat,
+            aircraftActive = metrics.global.planes,
         )
 
     }
@@ -51,6 +50,7 @@ class AdsbLolEndpoint @Inject constructor(
     data class NetworkStats(
         val beastFeeders: Int,
         val mlatFeeders: Int,
+        val aircraftActive: Int,
     )
 
     companion object {

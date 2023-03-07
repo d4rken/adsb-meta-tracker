@@ -1,5 +1,6 @@
 package eu.darken.adsbmt.networkstats.core.db
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -20,9 +21,9 @@ import eu.darken.adsbmt.common.room.InstantConverter
         AdsbLolNetworkStatsEntity::class,
         AirframesNetworkStatsEntity::class,
     ],
-    version = 1,
+    version = 2,
     autoMigrations = [
-
+        AutoMigration(1, 2)
     ],
     exportSchema = true,
 )
