@@ -6,11 +6,11 @@ import java.time.Instant
 
 data class AdsbFiStats(
     override val network: AdsbNetwork = AdsbFi,
-    override val beastFeeders: Int,
-    override val beastFeedersPrevious: Int,
-    override val mlatFeeders: Int,
-    override val mlatFeedersPrevious: Int,
-    override val totalAircraft: Int,
-    override val totalAircraftPrevious: Int,
+    override val feederActive: Int,
+    override val feederActiveDiff: Int,
+    override val mlatActive: Int,
+    override val mlatActiveDiff: Int,
+    override val aircraftActive: Int,
+    override val aircraftActiveDiff: Int,
     override val updatedAt: Instant,
-) : NetworkStats
+) : NetworkStats, NetworkStats.Aircraft, NetworkStats.Mlat

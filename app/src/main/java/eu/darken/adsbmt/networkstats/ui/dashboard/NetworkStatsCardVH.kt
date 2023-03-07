@@ -6,6 +6,7 @@ import android.net.Uri
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import eu.darken.adsbmt.R
 import eu.darken.adsbmt.common.lists.binding
 import eu.darken.adsbmt.databinding.DashboardNetworkStatsItemBinding
@@ -63,33 +64,44 @@ class NetworkStatsCardVH(parent: ViewGroup) :
         trackerIcon.setImageResource(stats.network.iconRes)
         trackerName.setText(stats.network.labelRes)
 
-        val beastTrend = stats.beastFeeders - stats.beastFeedersPrevious
-        feederBeastValue.text = stats.beastFeeders.toString()
+        val beastTrend = stats.feederActive - stats.feederActiveDiff
+        feederBeastValue.text = stats.feederActive.toString()
         feederBeastValueTrendValue.apply {
             setTrendText(beastTrend)
             setTrendColor(beastTrend)
         }
         feederBeastValueTrendIcon.setTrendIcon(beastTrend)
 
-        val mlatTrend = stats.mlatFeeders - stats.mlatFeedersPrevious
-        feederMlatValue.text = stats.mlatFeeders.toString()
-        feederMlatValueTrendValue.apply {
-            setTrendText(mlatTrend)
-            setTrendColor(mlatTrend)
+        if (stats is NetworkStats.Mlat) {
+            mlatRow.isVisible = true
+            val mlatTrend = stats.mlatActive - stats.mlatActiveDiff
+            feederMlatValue.text = stats.mlatActive.toString()
+            feederMlatValueTrendValue.apply {
+                setTrendText(mlatTrend)
+                setTrendColor(mlatTrend)
+            }
+            feederMlatValueTrendIcon.setTrendIcon(mlatTrend)
+        } else {
+            mlatRow.isVisible = false
         }
-        feederMlatValueTrendIcon.setTrendIcon(mlatTrend)
 
-        val aircraftTrend = stats.totalAircraft - stats.totalAircraftPrevious
-        feederAircraftValue.text = stats.totalAircraft.takeIf { it != 0 }?.toString() ?: "?"
-        feederAircraftValueTrendValue.apply {
-            setTrendText(aircraftTrend)
-            setTrendColor(aircraftTrend)
+        if (stats is NetworkStats.Aircraft) {
+            aircraftRow.isVisible = true
+            val aircraftTrend = stats.aircraftActive - stats.aircraftActiveDiff
+            feederAircraftValue.text = stats.aircraftActive.takeIf { it != 0 }?.toString() ?: "?"
+            feederAircraftValueTrendValue.apply {
+                setTrendText(aircraftTrend)
+                setTrendColor(aircraftTrend)
+            }
+            feederAircraftValueTrendIcon.setTrendIcon(aircraftTrend)
+        } else {
+            aircraftRow.isVisible = false
+
         }
-        feederAircraftValueTrendIcon.setTrendIcon(aircraftTrend)
 
         updatedAtValue.text = stats.updatedAt.toString()
 
-        viewWebsiteAction.setOnClickListener {
+        root.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW).apply {
                 data = Uri.parse(item.stats.network.website)
             }

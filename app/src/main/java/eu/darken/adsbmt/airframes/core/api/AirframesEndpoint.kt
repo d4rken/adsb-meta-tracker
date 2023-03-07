@@ -1,4 +1,4 @@
-package eu.darken.adsbmt.adsblol.core.api
+package eu.darken.adsbmt.airframes.core.api
 
 import com.squareup.moshi.Moshi
 import dagger.Reusable
@@ -13,7 +13,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import javax.inject.Inject
 
 @Reusable
-class AdsbLolEndpoint @Inject constructor(
+class AirframesEndpoint @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val baseHttpClient: OkHttpClient,
     private val baseMoshi: Moshi,
@@ -25,36 +25,22 @@ class AdsbLolEndpoint @Inject constructor(
         }.build()
     }
 
-    private val api: AdsbLolStatsApiV1 by lazy {
+    private val api: AirframesStatsApiV1 by lazy {
         Retrofit.Builder().apply {
-            baseUrl("https://api.adsb.lol/")
+            baseUrl("https://api.airframes.io/v1/")
             client(httpClient)
             addConverterFactory(ScalarsConverterFactory.create())
             addConverterFactory(MoshiConverterFactory.create(baseMoshi).asLenient())
-        }.build().create(AdsbLolStatsApiV1::class.java)
+        }.build().create(AirframesStatsApiV1::class.java)
     }
 
-    suspend fun getNetworkStats(): NetworkStats = withContext(dispatcherProvider.IO) {
+    suspend fun getNetworkStats() = withContext(dispatcherProvider.IO) {
         log(TAG) { "getNetworkStats()" }
-
-        val metrics = api.getMetrics().split("\n")
-        val feederActiveRaw = metrics[0]
-        val mlatActiveRaw = metrics[2]
-
-        NetworkStats(
-            beastFeeders = feederActiveRaw.split(" ").last().toInt(),
-            mlatFeeders = mlatActiveRaw.split(" ").last().toInt(),
-        )
-
+        api.getStats()
     }
-
-    data class NetworkStats(
-        val beastFeeders: Int,
-        val mlatFeeders: Int,
-    )
 
     companion object {
-        private val TAG = logTag("adsb.lol", "Endpoint")
+        private val TAG = logTag("airframes", "Endpoint")
     }
 }
 

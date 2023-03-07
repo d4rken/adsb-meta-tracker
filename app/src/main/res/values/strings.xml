@@ -36,7 +36,7 @@
     <string name="support_debuglog_desc">Record everything the app is doing into a text file that you can share.</string>
     <string name="settings_support_label">Support</string>
 
-    <string name="feeder_beast_label">Beast</string>
+    <string name="feeder_beast_label">Feeder</string>
     <string name="feeder_mlat_label">MLAT</string>
     <string name="platform_label">Platform</string>
 
@@ -48,4 +48,5 @@
     <string name="adsbone_label">ADS-B One</string>
     <string name="general_website_action">Website</string>
     <string name="adsblol_label">ADSB.lol</string>
+    <string name="airframes_label">Airframes</string>
 </resources>

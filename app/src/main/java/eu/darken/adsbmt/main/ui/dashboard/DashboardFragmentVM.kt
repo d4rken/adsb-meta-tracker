@@ -63,7 +63,7 @@ class DashboardFragmentVM @Inject constructor(
             }
 
             State(
-                items = items.sortedByDescending { it.stats.beastFeeders }
+                items = items.sortedByDescending { it.stats.feederActive }
             )
         }
         .asLiveData2()

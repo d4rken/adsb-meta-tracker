@@ -6,6 +6,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import eu.darken.adsbmt.adsbfi.core.db.AdsbFiNetworkStatsDao
 import eu.darken.adsbmt.adsblol.core.db.AdsbLolNetworkStatsDao
 import eu.darken.adsbmt.adsbone.core.db.AdsbOneNetworkStatsDao
+import eu.darken.adsbmt.airframes.core.db.AirframesNetworkStatsDao
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,7 +18,7 @@ class NetworkStatsDatabase @Inject constructor(
     private val database by lazy {
         Room.databaseBuilder(
             context,
-            NetworkStatsRoomDb::class.java, "network-stats"
+            NetworkStatsRoomDb::class.java, "network-stats-2"
         ).build()
     }
 
@@ -29,4 +30,7 @@ class NetworkStatsDatabase @Inject constructor(
 
     val adsbLol: AdsbLolNetworkStatsDao
         get() = database.adsbLol()
+
+    val airframes: AirframesNetworkStatsDao
+        get() = database.airframes()
 }

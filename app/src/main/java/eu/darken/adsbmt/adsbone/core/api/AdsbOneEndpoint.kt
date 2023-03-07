@@ -8,6 +8,7 @@ import eu.darken.adsbmt.common.debug.logging.logTag
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -36,23 +37,24 @@ class AdsbOneEndpoint @Inject constructor(
         }.build().create(AdsbOneStatsApiV1::class.java)
     }
 
-    suspend fun getNetworkStats(): NetworkStats = coroutineScope {
-        log(TAG) { "getNetworkStats()" }
-        val beastInfo = async { api.getBeastClients() }
-        val mlatInfo = async { api.getMlatClients() }
+    suspend fun getNetworkStats(): NetworkStats = withContext(dispatcherProvider.IO) {
+        coroutineScope {
+            log(TAG) { "getNetworkStats()" }
+            val beastInfo = async { api.getBeastClients() }
+            val mlatInfo = async { api.getMlatClients() }
 
-        awaitAll(beastInfo, mlatInfo)
+            awaitAll(beastInfo, mlatInfo)
 
-        NetworkStats(
-            beastFeeders = beastInfo.getCompleted().clientCount,
-            mlatFeeders = mlatInfo.getCompleted().clientCount,
-        )
+            NetworkStats(
+                beastFeeders = beastInfo.getCompleted().clientCount,
+                mlatFeeders = mlatInfo.getCompleted().clientCount,
+            )
+        }
     }
 
     data class NetworkStats(
         val beastFeeders: Int,
         val mlatFeeders: Int,
-        val totalAircraft: Int = 0,
     )
 
     companion object {

@@ -4,11 +4,17 @@ import java.time.Instant
 
 interface NetworkStats {
     val network: AdsbNetwork
-    val beastFeeders: Int
-    val beastFeedersPrevious: Int
-    val mlatFeeders: Int
-    val mlatFeedersPrevious: Int
-    val totalAircraft: Int
-    val totalAircraftPrevious: Int
+    val feederActive: Int
+    val feederActiveDiff: Int
     val updatedAt: Instant
+
+    interface Mlat {
+        val mlatActive: Int
+        val mlatActiveDiff: Int
+    }
+
+    interface Aircraft {
+        val aircraftActive: Int
+        val aircraftActiveDiff: Int
+    }
 }

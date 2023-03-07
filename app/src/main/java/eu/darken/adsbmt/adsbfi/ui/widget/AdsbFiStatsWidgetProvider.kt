@@ -109,12 +109,12 @@ class AdsbFiStatsWidgetProvider : AppWidgetProvider() {
 
         setOnClickPendingIntent(R.id.widget_root, pendingIntent)
 
-        setTextViewText(R.id.total_value, stats.beastFeeders.toString())
-        setImageViewTrendIcon(context, R.id.total_trend_icon, stats.beastFeeders - stats.beastFeedersPrevious)
-        setTextViewText(R.id.mlat_value, stats.mlatFeeders.toString())
-        setImageViewTrendIcon(context, R.id.mlat_trend_icon, stats.mlatFeeders - stats.mlatFeedersPrevious)
-        setTextViewText(R.id.aircraft_value, stats.totalAircraft.toString())
-        setImageViewTrendIcon(context, R.id.aircraft_trend_icon, stats.totalAircraft - stats.totalAircraftPrevious)
+        setTextViewText(R.id.total_value, stats.feederActive.toString())
+        setImageViewTrendIcon(context, R.id.total_trend_icon, stats.feederActive - stats.feederActiveDiff)
+        setTextViewText(R.id.mlat_value, stats.mlatActive.toString())
+        setImageViewTrendIcon(context, R.id.mlat_trend_icon, stats.mlatActive - stats.mlatActiveDiff)
+        setTextViewText(R.id.aircraft_value, stats.aircraftActive.toString())
+        setImageViewTrendIcon(context, R.id.aircraft_trend_icon, stats.aircraftActive - stats.aircraftActiveDiff)
     }
 
     fun RemoteViews.setImageViewTrendIcon(context: Context, @IdRes id: Int, trend: Int) {

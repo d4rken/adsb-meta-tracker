@@ -11,6 +11,9 @@ import eu.darken.adsbmt.adsblol.core.db.AdsbLolNetworkStatsEntity
 import eu.darken.adsbmt.adsbone.core.AdsbOneStats
 import eu.darken.adsbmt.adsbone.core.api.AdsbOneEndpoint
 import eu.darken.adsbmt.adsbone.core.db.AdsbOneNetworkStatsEntity
+import eu.darken.adsbmt.airframes.core.AirframesStats
+import eu.darken.adsbmt.airframes.core.api.AirframesEndpoint
+import eu.darken.adsbmt.airframes.core.db.AirframesNetworkStatsEntity
 import eu.darken.adsbmt.common.coroutine.AppScope
 import eu.darken.adsbmt.common.debug.logging.log
 import eu.darken.adsbmt.common.debug.logging.logTag
@@ -34,6 +37,7 @@ class NetworkStatsRepo @Inject constructor(
     private val adsbFiEndpoint: AdsbFiEndpoint,
     private val adsbOneEndpoint: AdsbOneEndpoint,
     private val adsbLolEndpoint: AdsbLolEndpoint,
+    private val airframesEndpoint: AirframesEndpoint,
 ) {
 
     data class State(
@@ -49,12 +53,12 @@ class NetworkStatsRepo @Inject constructor(
                 previous = database.adsbFi.getAll().firstOrNull()
             }
             AdsbFiStats(
-                beastFeeders = latest?.beastFeeders ?: 0,
-                beastFeedersPrevious = previous?.beastFeeders ?: 0,
-                mlatFeeders = latest?.mlatFeeders ?: 0,
-                mlatFeedersPrevious = previous?.mlatFeeders ?: 0,
-                totalAircraft = latest?.totalAircraft ?: 0,
-                totalAircraftPrevious = previous?.totalAircraft ?: 0,
+                feederActive = latest?.feederActive ?: 0,
+                feederActiveDiff = previous?.feederActive ?: 0,
+                mlatActive = latest?.mlatActive ?: 0,
+                mlatActiveDiff = previous?.mlatActive ?: 0,
+                aircraftActive = latest?.aircraftActive ?: 0,
+                aircraftActiveDiff = previous?.aircraftActive ?: 0,
                 updatedAt = latest?.createdAt ?: Instant.EPOCH
             )
         },
@@ -66,12 +70,10 @@ class NetworkStatsRepo @Inject constructor(
                 previous = database.adsbOne.getAll().firstOrNull()
             }
             AdsbOneStats(
-                beastFeeders = latest?.beastFeeders ?: 0,
-                beastFeedersPrevious = previous?.beastFeeders ?: 0,
-                mlatFeeders = latest?.mlatFeeders ?: 0,
-                mlatFeedersPrevious = previous?.mlatFeeders ?: 0,
-                totalAircraft = latest?.totalAircraft ?: 0,
-                totalAircraftPrevious = previous?.totalAircraft ?: 0,
+                feederActive = latest?.feederActive ?: 0,
+                feederActiveDiff = previous?.feederActive ?: 0,
+                mlatActive = latest?.mlatActive ?: 0,
+                mlatActiveDiff = previous?.mlatActive ?: 0,
                 updatedAt = latest?.createdAt ?: Instant.EPOCH
             )
         },
@@ -83,17 +85,30 @@ class NetworkStatsRepo @Inject constructor(
                 previous = database.adsbLol.getAll().firstOrNull()
             }
             AdsbLolStats(
-                beastFeeders = latest?.beastFeeders ?: 0,
-                beastFeedersPrevious = previous?.beastFeeders ?: 0,
-                mlatFeeders = latest?.mlatFeeders ?: 0,
-                mlatFeedersPrevious = previous?.mlatFeeders ?: 0,
-                totalAircraft = latest?.totalAircraft ?: 0,
-                totalAircraftPrevious = previous?.totalAircraft ?: 0,
+                feederActive = latest?.feederActive ?: 0,
+                feederActiveDiff = previous?.feederActive ?: 0,
+                mlatActive = latest?.mlatActive ?: 0,
+                mlatActiveDiff = previous?.mlatActive ?: 0,
                 updatedAt = latest?.createdAt ?: Instant.EPOCH
             )
         },
-    ) { fi, one, lol ->
-        State(stats = listOf(fi, one, lol))
+        database.airframes.getLatest().map { latest ->
+            var previous = database.airframes.getOlderStats(
+                Instant.now().minus(Duration.ofHours(24)).toEpochMilli()
+            )
+            if (previous == null) {
+                previous = database.airframes.getAll().firstOrNull()
+            }
+            AirframesStats(
+                feederActive = latest?.feederActive ?: 0,
+                feederActiveDiff = previous?.feederActive ?: 0,
+                aircraftActive = latest?.aircraftActive ?: 0,
+                aircraftActiveDiff = previous?.aircraftActive ?: 0,
+                updatedAt = latest?.createdAt ?: Instant.EPOCH
+            )
+        },
+    ) { fi, one, lol, air ->
+        State(stats = listOf(fi, one, lol, air))
     }
         .onEach { log(TAG) { "New display-stats: $it" } }
         .replayingShare(appScope)
@@ -111,9 +126,9 @@ class NetworkStatsRepo @Inject constructor(
                 }
                 log(TAG) { "New network stats: $stats" }
                 val statsEntity = AdsbFiNetworkStatsEntity(
-                    beastFeeders = stats.beastFeeders,
-                    mlatFeeders = stats.mlatFeeders,
-                    totalAircraft = stats.totalAircraft,
+                    feederActive = stats.beastFeeders,
+                    mlatActive = stats.mlatFeeders,
+                    aircraftActive = stats.totalAircraft,
                     createdAt = Instant.now()
                 )
                 val rowId = database.adsbFi.insert(statsEntity)
@@ -129,9 +144,8 @@ class NetworkStatsRepo @Inject constructor(
                 }
                 log(TAG) { "New network stats: $stats" }
                 val statsEntity = AdsbOneNetworkStatsEntity(
-                    beastFeeders = stats.beastFeeders,
-                    mlatFeeders = stats.mlatFeeders,
-                    totalAircraft = stats.totalAircraft,
+                    feederActive = stats.beastFeeders,
+                    mlatActive = stats.mlatFeeders,
                     createdAt = Instant.now()
                 )
                 val rowId = database.adsbOne.insert(statsEntity)
@@ -147,16 +161,32 @@ class NetworkStatsRepo @Inject constructor(
                 }
                 log(TAG) { "New network stats: $stats" }
                 val statsEntity = AdsbLolNetworkStatsEntity(
-                    beastFeeders = stats.beastFeeders,
-                    mlatFeeders = stats.mlatFeeders,
-                    totalAircraft = stats.totalAircraft,
+                    feederActive = stats.beastFeeders,
+                    mlatActive = stats.mlatFeeders,
                     createdAt = Instant.now()
                 )
                 val rowId = database.adsbLol.insert(statsEntity)
                 log(TAG) { "adsb.lol updated with ${statsEntity.copy(id = rowId)}" }
             }
 
-            awaitAll(adsbFi, adsbOne, adsbLol)
+            val airframes = async {
+                val stats = try {
+                    airframesEndpoint.getNetworkStats()
+                } catch (e: Exception) {
+                    log(TAG) { "Failed to get airframes.io network stats: $e" }
+                    return@async
+                }
+                log(TAG) { "New network stats: $stats" }
+                val statsEntity = AirframesNetworkStatsEntity(
+                    feederActive = stats.stations.active,
+                    aircraftActive = stats.flights.active,
+                    createdAt = Instant.now()
+                )
+                val rowId = database.airframes.insert(statsEntity)
+                log(TAG) { "airframes.io updated with ${statsEntity.copy(id = rowId)}" }
+            }
+
+            awaitAll(adsbFi, adsbOne, adsbLol, airframes)
         }
 
     }
